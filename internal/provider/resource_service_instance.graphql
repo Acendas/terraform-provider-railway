@@ -1,0 +1,46 @@
+# Service Instance resource - environment-scoped service configuration
+# This allows updating source image per environment, unlike the project-scoped railway_service
+
+# @genqlient(for: "ServiceInstance.source", pointer: true)
+# @genqlient(for: "ServiceSource.image", pointer: true)
+# @genqlient(for: "ServiceSource.repo", pointer: true)
+query getServiceInstanceForResource(
+  $environmentId: String!
+  $serviceId: String!
+) {
+  serviceInstance(environmentId: $environmentId, serviceId: $serviceId) {
+    id
+    environmentId
+    serviceId
+    source {
+      image
+      repo
+    }
+  }
+}
+
+# @genqlient(for: "ServiceInstanceUpdateInput.source", omitempty: true, pointer: true)
+# @genqlient(for: "ServiceInstanceUpdateInput.registryCredentials", omitempty: true, pointer: true)
+# @genqlient(for: "ServiceSourceInput.image", omitempty: true, pointer: true)
+# @genqlient(for: "ServiceSourceInput.repo", omitempty: true, pointer: true)
+mutation updateServiceInstanceWithEnv(
+  $environmentId: String!
+  $serviceId: String!
+  $input: ServiceInstanceUpdateInput!
+) {
+  serviceInstanceUpdate(
+    environmentId: $environmentId
+    serviceId: $serviceId
+    input: $input
+  )
+}
+
+mutation redeployServiceInstanceWithEnv(
+  $environmentId: String!
+  $serviceId: String!
+) {
+  serviceInstanceRedeploy(
+    environmentId: $environmentId
+    serviceId: $serviceId
+  )
+}
