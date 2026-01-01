@@ -32,3 +32,15 @@ jobs:
           # GitHub sets the GITHUB_TOKEN secret automatically.
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GPG_FINGERPRINT: ${{ steps.import_gpg.outputs.fingerprint }}
+      - name: Get version without v prefix
+        id: version
+        run: echo "version=${GITHUB_REF_NAME#v}" >> $GITHUB_OUTPUT
+      - name: Publish to HCP Terraform Registry
+        if: success()
+        run: ./scripts/publish-to-hcp.sh
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TF_CLOUD_TOKEN: ${{ secrets.TF_CLOUD_TOKEN }}
+          TF_ORG: acendas
+          GPG_KEY_ID: ${{ steps.import_gpg.outputs.keyid }}
+          VERSION: ${{ steps.version.outputs.version }}
