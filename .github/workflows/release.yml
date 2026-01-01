@@ -40,6 +40,7 @@ jobs:
         run: ./scripts/publish-to-hcp.sh
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
           TF_CLOUD_TOKEN: ${{ secrets.TF_CLOUD_TOKEN }}
           TF_ORG: acendas
           GPG_KEY_ID: ${{ steps.import_gpg.outputs.keyid }}

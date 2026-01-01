@@ -16,7 +16,7 @@ API_BASE="https://app.terraform.io/api/v2"
 REGISTRY_API="https://app.terraform.io/api/registry/private/v2"
 
 # Validate required environment variables
-for var in TF_CLOUD_TOKEN TF_ORG GPG_KEY_ID VERSION; do
+for var in TF_CLOUD_TOKEN TF_ORG GPG_KEY_ID VERSION GITHUB_REPOSITORY; do
     if [ -z "${!var}" ]; then
         echo "Error: $var environment variable is required"
         exit 1
@@ -35,6 +35,7 @@ cd "$WORK_DIR"
 
 ASSET_PREFIX="terraform-provider-${PROVIDER_NAME}_${VERSION}"
 gh release download "v${VERSION}" \
+    -R "${GITHUB_REPOSITORY}" \
     --pattern "${ASSET_PREFIX}_SHA256SUMS" \
     --pattern "${ASSET_PREFIX}_SHA256SUMS.sig" \
     --pattern "${ASSET_PREFIX}_*.zip"
