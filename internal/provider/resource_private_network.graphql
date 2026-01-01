@@ -1,0 +1,72 @@
+# Private Network resources - secure internal networking between services
+
+# Create or get a private network
+mutation createOrGetPrivateNetwork(
+  $input: PrivateNetworkCreateOrGetInput!
+) {
+  privateNetworkCreateOrGet(input: $input) {
+    publicId
+    name
+    dnsName
+    networkId
+    environmentId
+    projectId
+    tags
+  }
+}
+
+# List private networks for an environment
+query getPrivateNetworks($environmentId: String!) {
+  privateNetworks(environmentId: $environmentId) {
+    publicId
+    name
+    dnsName
+    networkId
+    environmentId
+    projectId
+    tags
+  }
+}
+
+# Delete all private networks for an environment
+mutation deletePrivateNetworksForEnvironment($environmentId: String!) {
+  privateNetworksForEnvironmentDelete(environmentId: $environmentId)
+}
+
+# Create or get a private network endpoint
+mutation createOrGetPrivateNetworkEndpoint(
+  $input: PrivateNetworkEndpointCreateOrGetInput!
+) {
+  privateNetworkEndpointCreateOrGet(input: $input) {
+    publicId
+    dnsName
+    privateIps
+    serviceInstanceId
+    tags
+  }
+}
+
+# Get a private network endpoint for a service instance
+# @genqlient(pointer: true)
+query getPrivateNetworkEndpoint(
+  $environmentId: String!
+  $privateNetworkId: String!
+  $serviceId: String!
+) {
+  privateNetworkEndpoint(
+    environmentId: $environmentId
+    privateNetworkId: $privateNetworkId
+    serviceId: $serviceId
+  ) {
+    publicId
+    dnsName
+    privateIps
+    serviceInstanceId
+    tags
+  }
+}
+
+# Delete a private network endpoint
+mutation deletePrivateNetworkEndpoint($id: String!) {
+  privateNetworkEndpointDelete(id: $id)
+}

@@ -106,6 +106,8 @@ func (p *RailwayProvider) Resources(ctx context.Context) []func() resource.Resou
 		NewCustomDomainResource,
 		NewServiceDomainResource,
 		NewTcpProxyResource,
+		NewPrivateNetworkResource,
+		NewPrivateNetworkEndpointResource,
 	}
 }
 

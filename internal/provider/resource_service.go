@@ -693,15 +693,15 @@ func buildServiceInstanceInput(data *ServiceResourceModel, regionsData *[]Servic
 	var instanceInput ServiceInstanceUpdateInput
 
 	if !data.CronSchedule.IsNull() {
-		instanceInput.CronSchedule = data.CronSchedule.ValueStringPointer()
+		instanceInput.CronSchedule = data.CronSchedule.ValueString()
 	}
 
 	if !data.RootDirectory.IsNull() {
-		instanceInput.RootDirectory = data.RootDirectory.ValueStringPointer()
+		instanceInput.RootDirectory = data.RootDirectory.ValueString()
 	}
 
 	if !data.ConfigPath.IsNull() {
-		instanceInput.RailwayConfigFile = data.ConfigPath.ValueStringPointer()
+		instanceInput.RailwayConfigFile = data.ConfigPath.ValueString()
 	}
 
 	if regionsData != nil {
@@ -713,7 +713,7 @@ func buildServiceInstanceInput(data *ServiceResourceModel, regionsData *[]Servic
 			}
 		}
 
-		instanceInput.MultiRegionConfig = &multiRegionConfig
+		instanceInput.MultiRegionConfig = multiRegionConfig
 	}
 
 	if !data.SourceImagePrivateRegistryUsername.IsNull() {

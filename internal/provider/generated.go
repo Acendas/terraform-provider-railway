@@ -147,6 +147,50 @@ func (v *EnvironmentCreateInput) GetSourceEnvironmentId() *string { return v.Sou
 // GetStageInitialChanges returns EnvironmentCreateInput.StageInitialChanges, and is useful for accessing the field via an interface.
 func (v *EnvironmentCreateInput) GetStageInitialChanges() bool { return v.StageInitialChanges }
 
+type PrivateNetworkCreateOrGetInput struct {
+	EnvironmentId string   `json:"environmentId"`
+	Name          string   `json:"name"`
+	ProjectId     string   `json:"projectId"`
+	Tags          []string `json:"tags"`
+}
+
+// GetEnvironmentId returns PrivateNetworkCreateOrGetInput.EnvironmentId, and is useful for accessing the field via an interface.
+func (v *PrivateNetworkCreateOrGetInput) GetEnvironmentId() string { return v.EnvironmentId }
+
+// GetName returns PrivateNetworkCreateOrGetInput.Name, and is useful for accessing the field via an interface.
+func (v *PrivateNetworkCreateOrGetInput) GetName() string { return v.Name }
+
+// GetProjectId returns PrivateNetworkCreateOrGetInput.ProjectId, and is useful for accessing the field via an interface.
+func (v *PrivateNetworkCreateOrGetInput) GetProjectId() string { return v.ProjectId }
+
+// GetTags returns PrivateNetworkCreateOrGetInput.Tags, and is useful for accessing the field via an interface.
+func (v *PrivateNetworkCreateOrGetInput) GetTags() []string { return v.Tags }
+
+type PrivateNetworkEndpointCreateOrGetInput struct {
+	EnvironmentId    string   `json:"environmentId"`
+	PrivateNetworkId string   `json:"privateNetworkId"`
+	ServiceId        string   `json:"serviceId"`
+	ServiceName      string   `json:"serviceName"`
+	Tags             []string `json:"tags"`
+}
+
+// GetEnvironmentId returns PrivateNetworkEndpointCreateOrGetInput.EnvironmentId, and is useful for accessing the field via an interface.
+func (v *PrivateNetworkEndpointCreateOrGetInput) GetEnvironmentId() string { return v.EnvironmentId }
+
+// GetPrivateNetworkId returns PrivateNetworkEndpointCreateOrGetInput.PrivateNetworkId, and is useful for accessing the field via an interface.
+func (v *PrivateNetworkEndpointCreateOrGetInput) GetPrivateNetworkId() string {
+	return v.PrivateNetworkId
+}
+
+// GetServiceId returns PrivateNetworkEndpointCreateOrGetInput.ServiceId, and is useful for accessing the field via an interface.
+func (v *PrivateNetworkEndpointCreateOrGetInput) GetServiceId() string { return v.ServiceId }
+
+// GetServiceName returns PrivateNetworkEndpointCreateOrGetInput.ServiceName, and is useful for accessing the field via an interface.
+func (v *PrivateNetworkEndpointCreateOrGetInput) GetServiceName() string { return v.ServiceName }
+
+// GetTags returns PrivateNetworkEndpointCreateOrGetInput.Tags, and is useful for accessing the field via an interface.
+func (v *PrivateNetworkEndpointCreateOrGetInput) GetTags() []string { return v.Tags }
+
 // Project includes the GraphQL fields of Project requested by the fragment Project.
 type Project struct {
 	Id           string                                           `json:"id"`
@@ -501,25 +545,25 @@ func (v *ServiceInstanceLimitsUpdateInput) GetVCPUs() *float64 { return v.VCPUs 
 type ServiceInstanceUpdateInput struct {
 	BuildCommand            *string                   `json:"buildCommand,omitempty"`
 	Builder                 *Builder                  `json:"builder,omitempty"`
-	CronSchedule            *string                   `json:"cronSchedule"`
+	CronSchedule            string                    `json:"cronSchedule"`
 	DrainingSeconds         int                       `json:"drainingSeconds"`
 	HealthcheckPath         *string                   `json:"healthcheckPath,omitempty"`
 	HealthcheckTimeout      *int                      `json:"healthcheckTimeout,omitempty"`
-	MultiRegionConfig       *map[string]interface{}   `json:"multiRegionConfig,omitempty"`
-	NixpacksPlan            *map[string]interface{}   `json:"nixpacksPlan,omitempty"`
-	NumReplicas             *int                      `json:"numReplicas,omitempty"`
+	MultiRegionConfig       map[string]interface{}    `json:"multiRegionConfig"`
+	NixpacksPlan            map[string]interface{}    `json:"nixpacksPlan"`
+	NumReplicas             int                       `json:"numReplicas"`
 	OverlapSeconds          int                       `json:"overlapSeconds"`
-	PreDeployCommand        *[]string                 `json:"preDeployCommand,omitempty"`
-	RailwayConfigFile       *string                   `json:"railwayConfigFile,omitempty"`
-	Region                  *string                   `json:"region,omitempty"`
+	PreDeployCommand        []*string                 `json:"preDeployCommand,omitempty"`
+	RailwayConfigFile       string                    `json:"railwayConfigFile"`
+	Region                  string                    `json:"region"`
 	RegistryCredentials     *RegistryCredentialsInput `json:"registryCredentials,omitempty"`
 	RestartPolicyMaxRetries *int                      `json:"restartPolicyMaxRetries,omitempty"`
 	RestartPolicyType       *RestartPolicyType        `json:"restartPolicyType,omitempty"`
-	RootDirectory           *string                   `json:"rootDirectory,omitempty"`
+	RootDirectory           string                    `json:"rootDirectory"`
 	SleepApplication        *bool                     `json:"sleepApplication,omitempty"`
 	Source                  *ServiceSourceInput       `json:"source,omitempty"`
 	StartCommand            *string                   `json:"startCommand,omitempty"`
-	WatchPatterns           *[]string                 `json:"watchPatterns,omitempty"`
+	WatchPatterns           []string                  `json:"watchPatterns"`
 }
 
 // GetBuildCommand returns ServiceInstanceUpdateInput.BuildCommand, and is useful for accessing the field via an interface.
@@ -529,7 +573,7 @@ func (v *ServiceInstanceUpdateInput) GetBuildCommand() *string { return v.BuildC
 func (v *ServiceInstanceUpdateInput) GetBuilder() *Builder { return v.Builder }
 
 // GetCronSchedule returns ServiceInstanceUpdateInput.CronSchedule, and is useful for accessing the field via an interface.
-func (v *ServiceInstanceUpdateInput) GetCronSchedule() *string { return v.CronSchedule }
+func (v *ServiceInstanceUpdateInput) GetCronSchedule() string { return v.CronSchedule }
 
 // GetDrainingSeconds returns ServiceInstanceUpdateInput.DrainingSeconds, and is useful for accessing the field via an interface.
 func (v *ServiceInstanceUpdateInput) GetDrainingSeconds() int { return v.DrainingSeconds }
@@ -541,27 +585,27 @@ func (v *ServiceInstanceUpdateInput) GetHealthcheckPath() *string { return v.Hea
 func (v *ServiceInstanceUpdateInput) GetHealthcheckTimeout() *int { return v.HealthcheckTimeout }
 
 // GetMultiRegionConfig returns ServiceInstanceUpdateInput.MultiRegionConfig, and is useful for accessing the field via an interface.
-func (v *ServiceInstanceUpdateInput) GetMultiRegionConfig() *map[string]interface{} {
+func (v *ServiceInstanceUpdateInput) GetMultiRegionConfig() map[string]interface{} {
 	return v.MultiRegionConfig
 }
 
 // GetNixpacksPlan returns ServiceInstanceUpdateInput.NixpacksPlan, and is useful for accessing the field via an interface.
-func (v *ServiceInstanceUpdateInput) GetNixpacksPlan() *map[string]interface{} { return v.NixpacksPlan }
+func (v *ServiceInstanceUpdateInput) GetNixpacksPlan() map[string]interface{} { return v.NixpacksPlan }
 
 // GetNumReplicas returns ServiceInstanceUpdateInput.NumReplicas, and is useful for accessing the field via an interface.
-func (v *ServiceInstanceUpdateInput) GetNumReplicas() *int { return v.NumReplicas }
+func (v *ServiceInstanceUpdateInput) GetNumReplicas() int { return v.NumReplicas }
 
 // GetOverlapSeconds returns ServiceInstanceUpdateInput.OverlapSeconds, and is useful for accessing the field via an interface.
 func (v *ServiceInstanceUpdateInput) GetOverlapSeconds() int { return v.OverlapSeconds }
 
 // GetPreDeployCommand returns ServiceInstanceUpdateInput.PreDeployCommand, and is useful for accessing the field via an interface.
-func (v *ServiceInstanceUpdateInput) GetPreDeployCommand() *[]string { return v.PreDeployCommand }
+func (v *ServiceInstanceUpdateInput) GetPreDeployCommand() []*string { return v.PreDeployCommand }
 
 // GetRailwayConfigFile returns ServiceInstanceUpdateInput.RailwayConfigFile, and is useful for accessing the field via an interface.
-func (v *ServiceInstanceUpdateInput) GetRailwayConfigFile() *string { return v.RailwayConfigFile }
+func (v *ServiceInstanceUpdateInput) GetRailwayConfigFile() string { return v.RailwayConfigFile }
 
 // GetRegion returns ServiceInstanceUpdateInput.Region, and is useful for accessing the field via an interface.
-func (v *ServiceInstanceUpdateInput) GetRegion() *string { return v.Region }
+func (v *ServiceInstanceUpdateInput) GetRegion() string { return v.Region }
 
 // GetRegistryCredentials returns ServiceInstanceUpdateInput.RegistryCredentials, and is useful for accessing the field via an interface.
 func (v *ServiceInstanceUpdateInput) GetRegistryCredentials() *RegistryCredentialsInput {
@@ -579,7 +623,7 @@ func (v *ServiceInstanceUpdateInput) GetRestartPolicyType() *RestartPolicyType {
 }
 
 // GetRootDirectory returns ServiceInstanceUpdateInput.RootDirectory, and is useful for accessing the field via an interface.
-func (v *ServiceInstanceUpdateInput) GetRootDirectory() *string { return v.RootDirectory }
+func (v *ServiceInstanceUpdateInput) GetRootDirectory() string { return v.RootDirectory }
 
 // GetSleepApplication returns ServiceInstanceUpdateInput.SleepApplication, and is useful for accessing the field via an interface.
 func (v *ServiceInstanceUpdateInput) GetSleepApplication() *bool { return v.SleepApplication }
@@ -591,7 +635,7 @@ func (v *ServiceInstanceUpdateInput) GetSource() *ServiceSourceInput { return v.
 func (v *ServiceInstanceUpdateInput) GetStartCommand() *string { return v.StartCommand }
 
 // GetWatchPatterns returns ServiceInstanceUpdateInput.WatchPatterns, and is useful for accessing the field via an interface.
-func (v *ServiceInstanceUpdateInput) GetWatchPatterns() *[]string { return v.WatchPatterns }
+func (v *ServiceInstanceUpdateInput) GetWatchPatterns() []string { return v.WatchPatterns }
 
 type ServiceSourceInput struct {
 	Image *string `json:"image,omitempty"`
@@ -902,6 +946,24 @@ type __createEnvironmentInput struct {
 // GetInput returns __createEnvironmentInput.Input, and is useful for accessing the field via an interface.
 func (v *__createEnvironmentInput) GetInput() EnvironmentCreateInput { return v.Input }
 
+// __createOrGetPrivateNetworkEndpointInput is used internally by genqlient
+type __createOrGetPrivateNetworkEndpointInput struct {
+	Input PrivateNetworkEndpointCreateOrGetInput `json:"input"`
+}
+
+// GetInput returns __createOrGetPrivateNetworkEndpointInput.Input, and is useful for accessing the field via an interface.
+func (v *__createOrGetPrivateNetworkEndpointInput) GetInput() PrivateNetworkEndpointCreateOrGetInput {
+	return v.Input
+}
+
+// __createOrGetPrivateNetworkInput is used internally by genqlient
+type __createOrGetPrivateNetworkInput struct {
+	Input PrivateNetworkCreateOrGetInput `json:"input"`
+}
+
+// GetInput returns __createOrGetPrivateNetworkInput.Input, and is useful for accessing the field via an interface.
+func (v *__createOrGetPrivateNetworkInput) GetInput() PrivateNetworkCreateOrGetInput { return v.Input }
+
 // __createProjectInput is used internally by genqlient
 type __createProjectInput struct {
 	Input ProjectCreateInput `json:"input"`
@@ -957,6 +1019,24 @@ type __deleteEnvironmentInput struct {
 
 // GetId returns __deleteEnvironmentInput.Id, and is useful for accessing the field via an interface.
 func (v *__deleteEnvironmentInput) GetId() string { return v.Id }
+
+// __deletePrivateNetworkEndpointInput is used internally by genqlient
+type __deletePrivateNetworkEndpointInput struct {
+	Id string `json:"id"`
+}
+
+// GetId returns __deletePrivateNetworkEndpointInput.Id, and is useful for accessing the field via an interface.
+func (v *__deletePrivateNetworkEndpointInput) GetId() string { return v.Id }
+
+// __deletePrivateNetworksForEnvironmentInput is used internally by genqlient
+type __deletePrivateNetworksForEnvironmentInput struct {
+	EnvironmentId string `json:"environmentId"`
+}
+
+// GetEnvironmentId returns __deletePrivateNetworksForEnvironmentInput.EnvironmentId, and is useful for accessing the field via an interface.
+func (v *__deletePrivateNetworksForEnvironmentInput) GetEnvironmentId() string {
+	return v.EnvironmentId
+}
 
 // __deleteProjectInput is used internally by genqlient
 type __deleteProjectInput struct {
@@ -1029,6 +1109,30 @@ type __getEnvironmentsInput struct {
 
 // GetProjectId returns __getEnvironmentsInput.ProjectId, and is useful for accessing the field via an interface.
 func (v *__getEnvironmentsInput) GetProjectId() string { return v.ProjectId }
+
+// __getPrivateNetworkEndpointInput is used internally by genqlient
+type __getPrivateNetworkEndpointInput struct {
+	EnvironmentId    *string `json:"environmentId"`
+	PrivateNetworkId *string `json:"privateNetworkId"`
+	ServiceId        *string `json:"serviceId"`
+}
+
+// GetEnvironmentId returns __getPrivateNetworkEndpointInput.EnvironmentId, and is useful for accessing the field via an interface.
+func (v *__getPrivateNetworkEndpointInput) GetEnvironmentId() *string { return v.EnvironmentId }
+
+// GetPrivateNetworkId returns __getPrivateNetworkEndpointInput.PrivateNetworkId, and is useful for accessing the field via an interface.
+func (v *__getPrivateNetworkEndpointInput) GetPrivateNetworkId() *string { return v.PrivateNetworkId }
+
+// GetServiceId returns __getPrivateNetworkEndpointInput.ServiceId, and is useful for accessing the field via an interface.
+func (v *__getPrivateNetworkEndpointInput) GetServiceId() *string { return v.ServiceId }
+
+// __getPrivateNetworksInput is used internally by genqlient
+type __getPrivateNetworksInput struct {
+	EnvironmentId string `json:"environmentId"`
+}
+
+// GetEnvironmentId returns __getPrivateNetworksInput.EnvironmentId, and is useful for accessing the field via an interface.
+func (v *__getPrivateNetworksInput) GetEnvironmentId() string { return v.EnvironmentId }
 
 // __getProjectInput is used internally by genqlient
 type __getProjectInput struct {
@@ -1555,6 +1659,108 @@ func (v *createEnvironmentResponse) GetEnvironmentCreate() createEnvironmentEnvi
 	return v.EnvironmentCreate
 }
 
+// createOrGetPrivateNetworkEndpointPrivateNetworkEndpointCreateOrGetPrivateNetworkEndpoint includes the requested fields of the GraphQL type PrivateNetworkEndpoint.
+type createOrGetPrivateNetworkEndpointPrivateNetworkEndpointCreateOrGetPrivateNetworkEndpoint struct {
+	PublicId          string   `json:"publicId"`
+	DnsName           string   `json:"dnsName"`
+	PrivateIps        []string `json:"privateIps"`
+	ServiceInstanceId string   `json:"serviceInstanceId"`
+	Tags              []string `json:"tags"`
+}
+
+// GetPublicId returns createOrGetPrivateNetworkEndpointPrivateNetworkEndpointCreateOrGetPrivateNetworkEndpoint.PublicId, and is useful for accessing the field via an interface.
+func (v *createOrGetPrivateNetworkEndpointPrivateNetworkEndpointCreateOrGetPrivateNetworkEndpoint) GetPublicId() string {
+	return v.PublicId
+}
+
+// GetDnsName returns createOrGetPrivateNetworkEndpointPrivateNetworkEndpointCreateOrGetPrivateNetworkEndpoint.DnsName, and is useful for accessing the field via an interface.
+func (v *createOrGetPrivateNetworkEndpointPrivateNetworkEndpointCreateOrGetPrivateNetworkEndpoint) GetDnsName() string {
+	return v.DnsName
+}
+
+// GetPrivateIps returns createOrGetPrivateNetworkEndpointPrivateNetworkEndpointCreateOrGetPrivateNetworkEndpoint.PrivateIps, and is useful for accessing the field via an interface.
+func (v *createOrGetPrivateNetworkEndpointPrivateNetworkEndpointCreateOrGetPrivateNetworkEndpoint) GetPrivateIps() []string {
+	return v.PrivateIps
+}
+
+// GetServiceInstanceId returns createOrGetPrivateNetworkEndpointPrivateNetworkEndpointCreateOrGetPrivateNetworkEndpoint.ServiceInstanceId, and is useful for accessing the field via an interface.
+func (v *createOrGetPrivateNetworkEndpointPrivateNetworkEndpointCreateOrGetPrivateNetworkEndpoint) GetServiceInstanceId() string {
+	return v.ServiceInstanceId
+}
+
+// GetTags returns createOrGetPrivateNetworkEndpointPrivateNetworkEndpointCreateOrGetPrivateNetworkEndpoint.Tags, and is useful for accessing the field via an interface.
+func (v *createOrGetPrivateNetworkEndpointPrivateNetworkEndpointCreateOrGetPrivateNetworkEndpoint) GetTags() []string {
+	return v.Tags
+}
+
+// createOrGetPrivateNetworkEndpointResponse is returned by createOrGetPrivateNetworkEndpoint on success.
+type createOrGetPrivateNetworkEndpointResponse struct {
+	// Create or get a private network endpoint.
+	PrivateNetworkEndpointCreateOrGet createOrGetPrivateNetworkEndpointPrivateNetworkEndpointCreateOrGetPrivateNetworkEndpoint `json:"privateNetworkEndpointCreateOrGet"`
+}
+
+// GetPrivateNetworkEndpointCreateOrGet returns createOrGetPrivateNetworkEndpointResponse.PrivateNetworkEndpointCreateOrGet, and is useful for accessing the field via an interface.
+func (v *createOrGetPrivateNetworkEndpointResponse) GetPrivateNetworkEndpointCreateOrGet() createOrGetPrivateNetworkEndpointPrivateNetworkEndpointCreateOrGetPrivateNetworkEndpoint {
+	return v.PrivateNetworkEndpointCreateOrGet
+}
+
+// createOrGetPrivateNetworkPrivateNetworkCreateOrGetPrivateNetwork includes the requested fields of the GraphQL type PrivateNetwork.
+type createOrGetPrivateNetworkPrivateNetworkCreateOrGetPrivateNetwork struct {
+	PublicId      string   `json:"publicId"`
+	Name          string   `json:"name"`
+	DnsName       string   `json:"dnsName"`
+	NetworkId     int64    `json:"networkId"`
+	EnvironmentId string   `json:"environmentId"`
+	ProjectId     string   `json:"projectId"`
+	Tags          []string `json:"tags"`
+}
+
+// GetPublicId returns createOrGetPrivateNetworkPrivateNetworkCreateOrGetPrivateNetwork.PublicId, and is useful for accessing the field via an interface.
+func (v *createOrGetPrivateNetworkPrivateNetworkCreateOrGetPrivateNetwork) GetPublicId() string {
+	return v.PublicId
+}
+
+// GetName returns createOrGetPrivateNetworkPrivateNetworkCreateOrGetPrivateNetwork.Name, and is useful for accessing the field via an interface.
+func (v *createOrGetPrivateNetworkPrivateNetworkCreateOrGetPrivateNetwork) GetName() string {
+	return v.Name
+}
+
+// GetDnsName returns createOrGetPrivateNetworkPrivateNetworkCreateOrGetPrivateNetwork.DnsName, and is useful for accessing the field via an interface.
+func (v *createOrGetPrivateNetworkPrivateNetworkCreateOrGetPrivateNetwork) GetDnsName() string {
+	return v.DnsName
+}
+
+// GetNetworkId returns createOrGetPrivateNetworkPrivateNetworkCreateOrGetPrivateNetwork.NetworkId, and is useful for accessing the field via an interface.
+func (v *createOrGetPrivateNetworkPrivateNetworkCreateOrGetPrivateNetwork) GetNetworkId() int64 {
+	return v.NetworkId
+}
+
+// GetEnvironmentId returns createOrGetPrivateNetworkPrivateNetworkCreateOrGetPrivateNetwork.EnvironmentId, and is useful for accessing the field via an interface.
+func (v *createOrGetPrivateNetworkPrivateNetworkCreateOrGetPrivateNetwork) GetEnvironmentId() string {
+	return v.EnvironmentId
+}
+
+// GetProjectId returns createOrGetPrivateNetworkPrivateNetworkCreateOrGetPrivateNetwork.ProjectId, and is useful for accessing the field via an interface.
+func (v *createOrGetPrivateNetworkPrivateNetworkCreateOrGetPrivateNetwork) GetProjectId() string {
+	return v.ProjectId
+}
+
+// GetTags returns createOrGetPrivateNetworkPrivateNetworkCreateOrGetPrivateNetwork.Tags, and is useful for accessing the field via an interface.
+func (v *createOrGetPrivateNetworkPrivateNetworkCreateOrGetPrivateNetwork) GetTags() []string {
+	return v.Tags
+}
+
+// createOrGetPrivateNetworkResponse is returned by createOrGetPrivateNetwork on success.
+type createOrGetPrivateNetworkResponse struct {
+	// Create or get a private network.
+	PrivateNetworkCreateOrGet createOrGetPrivateNetworkPrivateNetworkCreateOrGetPrivateNetwork `json:"privateNetworkCreateOrGet"`
+}
+
+// GetPrivateNetworkCreateOrGet returns createOrGetPrivateNetworkResponse.PrivateNetworkCreateOrGet, and is useful for accessing the field via an interface.
+func (v *createOrGetPrivateNetworkResponse) GetPrivateNetworkCreateOrGet() createOrGetPrivateNetworkPrivateNetworkCreateOrGetPrivateNetwork {
+	return v.PrivateNetworkCreateOrGet
+}
+
 // createProjectProjectCreateProject includes the requested fields of the GraphQL type Project.
 type createProjectProjectCreateProject struct {
 	Project `json:"-"`
@@ -2022,6 +2228,28 @@ type deleteEnvironmentResponse struct {
 // GetEnvironmentDelete returns deleteEnvironmentResponse.EnvironmentDelete, and is useful for accessing the field via an interface.
 func (v *deleteEnvironmentResponse) GetEnvironmentDelete() bool { return v.EnvironmentDelete }
 
+// deletePrivateNetworkEndpointResponse is returned by deletePrivateNetworkEndpoint on success.
+type deletePrivateNetworkEndpointResponse struct {
+	// Delete a private network endpoint.
+	PrivateNetworkEndpointDelete bool `json:"privateNetworkEndpointDelete"`
+}
+
+// GetPrivateNetworkEndpointDelete returns deletePrivateNetworkEndpointResponse.PrivateNetworkEndpointDelete, and is useful for accessing the field via an interface.
+func (v *deletePrivateNetworkEndpointResponse) GetPrivateNetworkEndpointDelete() bool {
+	return v.PrivateNetworkEndpointDelete
+}
+
+// deletePrivateNetworksForEnvironmentResponse is returned by deletePrivateNetworksForEnvironment on success.
+type deletePrivateNetworksForEnvironmentResponse struct {
+	// Delete all private networks for an environment.
+	PrivateNetworksForEnvironmentDelete bool `json:"privateNetworksForEnvironmentDelete"`
+}
+
+// GetPrivateNetworksForEnvironmentDelete returns deletePrivateNetworksForEnvironmentResponse.PrivateNetworksForEnvironmentDelete, and is useful for accessing the field via an interface.
+func (v *deletePrivateNetworksForEnvironmentResponse) GetPrivateNetworksForEnvironmentDelete() bool {
+	return v.PrivateNetworksForEnvironmentDelete
+}
+
 // deleteProjectResponse is returned by deleteProject on success.
 type deleteProjectResponse struct {
 	// Deletes a project.
@@ -2267,6 +2495,90 @@ type getEnvironmentsResponse struct {
 // GetEnvironments returns getEnvironmentsResponse.Environments, and is useful for accessing the field via an interface.
 func (v *getEnvironmentsResponse) GetEnvironments() getEnvironmentsEnvironmentsQueryEnvironmentsConnection {
 	return v.Environments
+}
+
+// getPrivateNetworkEndpointPrivateNetworkEndpoint includes the requested fields of the GraphQL type PrivateNetworkEndpoint.
+type getPrivateNetworkEndpointPrivateNetworkEndpoint struct {
+	PublicId          *string   `json:"publicId"`
+	DnsName           *string   `json:"dnsName"`
+	PrivateIps        []*string `json:"privateIps"`
+	ServiceInstanceId *string   `json:"serviceInstanceId"`
+	Tags              []*string `json:"tags"`
+}
+
+// GetPublicId returns getPrivateNetworkEndpointPrivateNetworkEndpoint.PublicId, and is useful for accessing the field via an interface.
+func (v *getPrivateNetworkEndpointPrivateNetworkEndpoint) GetPublicId() *string { return v.PublicId }
+
+// GetDnsName returns getPrivateNetworkEndpointPrivateNetworkEndpoint.DnsName, and is useful for accessing the field via an interface.
+func (v *getPrivateNetworkEndpointPrivateNetworkEndpoint) GetDnsName() *string { return v.DnsName }
+
+// GetPrivateIps returns getPrivateNetworkEndpointPrivateNetworkEndpoint.PrivateIps, and is useful for accessing the field via an interface.
+func (v *getPrivateNetworkEndpointPrivateNetworkEndpoint) GetPrivateIps() []*string {
+	return v.PrivateIps
+}
+
+// GetServiceInstanceId returns getPrivateNetworkEndpointPrivateNetworkEndpoint.ServiceInstanceId, and is useful for accessing the field via an interface.
+func (v *getPrivateNetworkEndpointPrivateNetworkEndpoint) GetServiceInstanceId() *string {
+	return v.ServiceInstanceId
+}
+
+// GetTags returns getPrivateNetworkEndpointPrivateNetworkEndpoint.Tags, and is useful for accessing the field via an interface.
+func (v *getPrivateNetworkEndpointPrivateNetworkEndpoint) GetTags() []*string { return v.Tags }
+
+// getPrivateNetworkEndpointResponse is returned by getPrivateNetworkEndpoint on success.
+type getPrivateNetworkEndpointResponse struct {
+	// Get a private network endpoint for a service instance.
+	PrivateNetworkEndpoint *getPrivateNetworkEndpointPrivateNetworkEndpoint `json:"privateNetworkEndpoint"`
+}
+
+// GetPrivateNetworkEndpoint returns getPrivateNetworkEndpointResponse.PrivateNetworkEndpoint, and is useful for accessing the field via an interface.
+func (v *getPrivateNetworkEndpointResponse) GetPrivateNetworkEndpoint() *getPrivateNetworkEndpointPrivateNetworkEndpoint {
+	return v.PrivateNetworkEndpoint
+}
+
+// getPrivateNetworksPrivateNetworksPrivateNetwork includes the requested fields of the GraphQL type PrivateNetwork.
+type getPrivateNetworksPrivateNetworksPrivateNetwork struct {
+	PublicId      string   `json:"publicId"`
+	Name          string   `json:"name"`
+	DnsName       string   `json:"dnsName"`
+	NetworkId     int64    `json:"networkId"`
+	EnvironmentId string   `json:"environmentId"`
+	ProjectId     string   `json:"projectId"`
+	Tags          []string `json:"tags"`
+}
+
+// GetPublicId returns getPrivateNetworksPrivateNetworksPrivateNetwork.PublicId, and is useful for accessing the field via an interface.
+func (v *getPrivateNetworksPrivateNetworksPrivateNetwork) GetPublicId() string { return v.PublicId }
+
+// GetName returns getPrivateNetworksPrivateNetworksPrivateNetwork.Name, and is useful for accessing the field via an interface.
+func (v *getPrivateNetworksPrivateNetworksPrivateNetwork) GetName() string { return v.Name }
+
+// GetDnsName returns getPrivateNetworksPrivateNetworksPrivateNetwork.DnsName, and is useful for accessing the field via an interface.
+func (v *getPrivateNetworksPrivateNetworksPrivateNetwork) GetDnsName() string { return v.DnsName }
+
+// GetNetworkId returns getPrivateNetworksPrivateNetworksPrivateNetwork.NetworkId, and is useful for accessing the field via an interface.
+func (v *getPrivateNetworksPrivateNetworksPrivateNetwork) GetNetworkId() int64 { return v.NetworkId }
+
+// GetEnvironmentId returns getPrivateNetworksPrivateNetworksPrivateNetwork.EnvironmentId, and is useful for accessing the field via an interface.
+func (v *getPrivateNetworksPrivateNetworksPrivateNetwork) GetEnvironmentId() string {
+	return v.EnvironmentId
+}
+
+// GetProjectId returns getPrivateNetworksPrivateNetworksPrivateNetwork.ProjectId, and is useful for accessing the field via an interface.
+func (v *getPrivateNetworksPrivateNetworksPrivateNetwork) GetProjectId() string { return v.ProjectId }
+
+// GetTags returns getPrivateNetworksPrivateNetworksPrivateNetwork.Tags, and is useful for accessing the field via an interface.
+func (v *getPrivateNetworksPrivateNetworksPrivateNetwork) GetTags() []string { return v.Tags }
+
+// getPrivateNetworksResponse is returned by getPrivateNetworks on success.
+type getPrivateNetworksResponse struct {
+	// List private networks for an environment.
+	PrivateNetworks []getPrivateNetworksPrivateNetworksPrivateNetwork `json:"privateNetworks"`
+}
+
+// GetPrivateNetworks returns getPrivateNetworksResponse.PrivateNetworks, and is useful for accessing the field via an interface.
+func (v *getPrivateNetworksResponse) GetPrivateNetworks() []getPrivateNetworksPrivateNetworksPrivateNetwork {
+	return v.PrivateNetworks
 }
 
 // getProjectProject includes the requested fields of the GraphQL type Project.
@@ -3608,6 +3920,82 @@ fragment Environment on Environment {
 	return &data, err
 }
 
+// Create or get a private network
+func createOrGetPrivateNetwork(
+	ctx context.Context,
+	client graphql.Client,
+	input PrivateNetworkCreateOrGetInput,
+) (*createOrGetPrivateNetworkResponse, error) {
+	req := &graphql.Request{
+		OpName: "createOrGetPrivateNetwork",
+		Query: `
+mutation createOrGetPrivateNetwork ($input: PrivateNetworkCreateOrGetInput!) {
+	privateNetworkCreateOrGet(input: $input) {
+		publicId
+		name
+		dnsName
+		networkId
+		environmentId
+		projectId
+		tags
+	}
+}
+`,
+		Variables: &__createOrGetPrivateNetworkInput{
+			Input: input,
+		},
+	}
+	var err error
+
+	var data createOrGetPrivateNetworkResponse
+	resp := &graphql.Response{Data: &data}
+
+	err = client.MakeRequest(
+		ctx,
+		req,
+		resp,
+	)
+
+	return &data, err
+}
+
+// Create or get a private network endpoint
+func createOrGetPrivateNetworkEndpoint(
+	ctx context.Context,
+	client graphql.Client,
+	input PrivateNetworkEndpointCreateOrGetInput,
+) (*createOrGetPrivateNetworkEndpointResponse, error) {
+	req := &graphql.Request{
+		OpName: "createOrGetPrivateNetworkEndpoint",
+		Query: `
+mutation createOrGetPrivateNetworkEndpoint ($input: PrivateNetworkEndpointCreateOrGetInput!) {
+	privateNetworkEndpointCreateOrGet(input: $input) {
+		publicId
+		dnsName
+		privateIps
+		serviceInstanceId
+		tags
+	}
+}
+`,
+		Variables: &__createOrGetPrivateNetworkEndpointInput{
+			Input: input,
+		},
+	}
+	var err error
+
+	var data createOrGetPrivateNetworkEndpointResponse
+	resp := &graphql.Response{Data: &data}
+
+	err = client.MakeRequest(
+		ctx,
+		req,
+		resp,
+	)
+
+	return &data, err
+}
+
 func createProject(
 	ctx context.Context,
 	client graphql.Client,
@@ -3871,6 +4259,68 @@ mutation deleteEnvironment ($id: String!) {
 	var err error
 
 	var data deleteEnvironmentResponse
+	resp := &graphql.Response{Data: &data}
+
+	err = client.MakeRequest(
+		ctx,
+		req,
+		resp,
+	)
+
+	return &data, err
+}
+
+// Delete a private network endpoint
+func deletePrivateNetworkEndpoint(
+	ctx context.Context,
+	client graphql.Client,
+	id string,
+) (*deletePrivateNetworkEndpointResponse, error) {
+	req := &graphql.Request{
+		OpName: "deletePrivateNetworkEndpoint",
+		Query: `
+mutation deletePrivateNetworkEndpoint ($id: String!) {
+	privateNetworkEndpointDelete(id: $id)
+}
+`,
+		Variables: &__deletePrivateNetworkEndpointInput{
+			Id: id,
+		},
+	}
+	var err error
+
+	var data deletePrivateNetworkEndpointResponse
+	resp := &graphql.Response{Data: &data}
+
+	err = client.MakeRequest(
+		ctx,
+		req,
+		resp,
+	)
+
+	return &data, err
+}
+
+// Delete all private networks for an environment
+func deletePrivateNetworksForEnvironment(
+	ctx context.Context,
+	client graphql.Client,
+	environmentId string,
+) (*deletePrivateNetworksForEnvironmentResponse, error) {
+	req := &graphql.Request{
+		OpName: "deletePrivateNetworksForEnvironment",
+		Query: `
+mutation deletePrivateNetworksForEnvironment ($environmentId: String!) {
+	privateNetworksForEnvironmentDelete(environmentId: $environmentId)
+}
+`,
+		Variables: &__deletePrivateNetworksForEnvironmentInput{
+			EnvironmentId: environmentId,
+		},
+	}
+	var err error
+
+	var data deletePrivateNetworksForEnvironmentResponse
 	resp := &graphql.Response{Data: &data}
 
 	err = client.MakeRequest(
@@ -4161,6 +4611,86 @@ fragment Environment on Environment {
 	var err error
 
 	var data getEnvironmentsResponse
+	resp := &graphql.Response{Data: &data}
+
+	err = client.MakeRequest(
+		ctx,
+		req,
+		resp,
+	)
+
+	return &data, err
+}
+
+// Get a private network endpoint for a service instance
+func getPrivateNetworkEndpoint(
+	ctx context.Context,
+	client graphql.Client,
+	environmentId *string,
+	privateNetworkId *string,
+	serviceId *string,
+) (*getPrivateNetworkEndpointResponse, error) {
+	req := &graphql.Request{
+		OpName: "getPrivateNetworkEndpoint",
+		Query: `
+query getPrivateNetworkEndpoint ($environmentId: String!, $privateNetworkId: String!, $serviceId: String!) {
+	privateNetworkEndpoint(environmentId: $environmentId, privateNetworkId: $privateNetworkId, serviceId: $serviceId) {
+		publicId
+		dnsName
+		privateIps
+		serviceInstanceId
+		tags
+	}
+}
+`,
+		Variables: &__getPrivateNetworkEndpointInput{
+			EnvironmentId:    environmentId,
+			PrivateNetworkId: privateNetworkId,
+			ServiceId:        serviceId,
+		},
+	}
+	var err error
+
+	var data getPrivateNetworkEndpointResponse
+	resp := &graphql.Response{Data: &data}
+
+	err = client.MakeRequest(
+		ctx,
+		req,
+		resp,
+	)
+
+	return &data, err
+}
+
+// List private networks for an environment
+func getPrivateNetworks(
+	ctx context.Context,
+	client graphql.Client,
+	environmentId string,
+) (*getPrivateNetworksResponse, error) {
+	req := &graphql.Request{
+		OpName: "getPrivateNetworks",
+		Query: `
+query getPrivateNetworks ($environmentId: String!) {
+	privateNetworks(environmentId: $environmentId) {
+		publicId
+		name
+		dnsName
+		networkId
+		environmentId
+		projectId
+		tags
+	}
+}
+`,
+		Variables: &__getPrivateNetworksInput{
+			EnvironmentId: environmentId,
+		},
+	}
+	var err error
+
+	var data getPrivateNetworksResponse
 	resp := &graphql.Response{Data: &data}
 
 	err = client.MakeRequest(

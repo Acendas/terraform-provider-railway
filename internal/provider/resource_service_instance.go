@@ -459,7 +459,12 @@ func (r *ServiceInstanceResource) buildUpdateInput(ctx context.Context, data *Se
 	if !data.PreDeployCommand.IsNull() {
 		var cmds []string
 		data.PreDeployCommand.ElementsAs(ctx, &cmds, false)
-		input.PreDeployCommand = &cmds
+		// Convert []string to []*string
+		ptrCmds := make([]*string, len(cmds))
+		for i := range cmds {
+			ptrCmds[i] = &cmds[i]
+		}
+		input.PreDeployCommand = ptrCmds
 	}
 
 	// Health checks
