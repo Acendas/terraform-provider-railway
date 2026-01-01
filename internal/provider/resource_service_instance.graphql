@@ -4,6 +4,11 @@
 # @genqlient(for: "ServiceInstance.source", pointer: true)
 # @genqlient(for: "ServiceSource.image", pointer: true)
 # @genqlient(for: "ServiceSource.repo", pointer: true)
+# @genqlient(for: "ServiceInstance.buildCommand", pointer: true)
+# @genqlient(for: "ServiceInstance.startCommand", pointer: true)
+# @genqlient(for: "ServiceInstance.healthcheckPath", pointer: true)
+# @genqlient(for: "ServiceInstance.healthcheckTimeout", pointer: true)
+# @genqlient(for: "ServiceInstance.sleepApplication", pointer: true)
 query getServiceInstanceForResource(
   $environmentId: String!
   $serviceId: String!
@@ -16,6 +21,19 @@ query getServiceInstanceForResource(
       image
       repo
     }
+    # Build configuration
+    builder
+    buildCommand
+    startCommand
+    preDeployCommand
+    # Health checks
+    healthcheckPath
+    healthcheckTimeout
+    # Restart policies
+    restartPolicyType
+    restartPolicyMaxRetries
+    # Serverless mode
+    sleepApplication
   }
 }
 
@@ -23,6 +41,19 @@ query getServiceInstanceForResource(
 # @genqlient(for: "ServiceInstanceUpdateInput.registryCredentials", omitempty: true, pointer: true)
 # @genqlient(for: "ServiceSourceInput.image", omitempty: true, pointer: true)
 # @genqlient(for: "ServiceSourceInput.repo", omitempty: true, pointer: true)
+# Build configuration
+# @genqlient(for: "ServiceInstanceUpdateInput.builder", omitempty: true, pointer: true)
+# @genqlient(for: "ServiceInstanceUpdateInput.buildCommand", omitempty: true, pointer: true)
+# @genqlient(for: "ServiceInstanceUpdateInput.startCommand", omitempty: true, pointer: true)
+# @genqlient(for: "ServiceInstanceUpdateInput.preDeployCommand", omitempty: true, pointer: true)
+# Health checks
+# @genqlient(for: "ServiceInstanceUpdateInput.healthcheckPath", omitempty: true, pointer: true)
+# @genqlient(for: "ServiceInstanceUpdateInput.healthcheckTimeout", omitempty: true, pointer: true)
+# Restart policies
+# @genqlient(for: "ServiceInstanceUpdateInput.restartPolicyType", omitempty: true, pointer: true)
+# @genqlient(for: "ServiceInstanceUpdateInput.restartPolicyMaxRetries", omitempty: true, pointer: true)
+# Serverless mode
+# @genqlient(for: "ServiceInstanceUpdateInput.sleepApplication", omitempty: true, pointer: true)
 mutation updateServiceInstanceWithEnv(
   $environmentId: String!
   $serviceId: String!

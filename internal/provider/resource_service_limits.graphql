@@ -1,0 +1,9 @@
+# Service Limits resource - configure CPU and memory allocation for service instances
+
+# @genqlient(for: "ServiceInstanceLimitsUpdateInput.memoryGB", omitempty: true, pointer: true)
+# @genqlient(for: "ServiceInstanceLimitsUpdateInput.vCPUs", omitempty: true, pointer: true)
+mutation updateServiceInstanceLimits(
+  $input: ServiceInstanceLimitsUpdateInput!
+) {
+  serviceInstanceLimitsUpdate(input: $input)
+}

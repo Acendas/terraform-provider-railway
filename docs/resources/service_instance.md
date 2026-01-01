@@ -22,6 +22,11 @@ description: |-
     sourceimage   = "ghcr.io/myorg/api:staging"
   registrycredentialsusername = var.ghcrusername
     registrycredentialspassword = var.ghcrtoken
+  # Enable serverless mode for staging (sleeps when inactive)
+    sleep_application = true
+  # Health check configuration
+    healthcheckpath    = "/health"
+    healthchecktimeout = 30
   }
   Configure production instance with production image
   resource "railwayserviceinstance" "apiproduction" {
@@ -30,6 +35,16 @@ description: |-
     sourceimage   = "ghcr.io/myorg/api:v1.2.3"
   registrycredentialsusername = var.ghcrusername
     registrycredentialspassword = var.ghcrtoken
+  # Production should always restart on failure
+    restartpolicytype       = "ONFAILURE"
+    restartpolicymaxretries = 3
+  # Custom start command
+    start_command = "npm run start:prod"
+  # Run database migrations before deployment
+    predeploycommand = ["npm run db:migrate"]
+  # Health check configuration
+    healthcheckpath    = "/health"
+    healthchecktimeout = 60
   }
   ```
 ---
@@ -61,6 +76,13 @@ resource "railway_service_instance" "api_staging" {
 
   registry_credentials_username = var.ghcr_username
   registry_credentials_password = var.ghcr_token
+
+  # Enable serverless mode for staging (sleeps when inactive)
+  sleep_application = true
+
+  # Health check configuration
+  healthcheck_path    = "/health"
+  healthcheck_timeout = 30
 }
 
 # Configure production instance with production image
@@ -71,6 +93,20 @@ resource "railway_service_instance" "api_production" {
 
   registry_credentials_username = var.ghcr_username
   registry_credentials_password = var.ghcr_token
+
+  # Production should always restart on failure
+  restart_policy_type       = "ON_FAILURE"
+  restart_policy_max_retries = 3
+
+  # Custom start command
+  start_command = "npm run start:prod"
+
+  # Run database migrations before deployment
+  pre_deploy_command = ["npm run db:migrate"]
+
+  # Health check configuration
+  healthcheck_path    = "/health"
+  healthcheck_timeout = 60
 }
 ```
 
@@ -86,11 +122,20 @@ resource "railway_service_instance" "api_production" {
 
 ### Optional
 
+- `build_command` (String) Custom build command to run during the build phase.
+- `builder` (String) Build system to use. Valid values: `NIXPACKS`, `HEROKU`, `PAKETO`, `RAILPACK`.
+- `healthcheck_path` (String) HTTP path for health checks (e.g., `/health`). Railway will poll this endpoint to determine service health.
+- `healthcheck_timeout` (Number) Timeout in seconds for health check requests.
+- `pre_deploy_command` (List of String) Commands to run before deployment (e.g., database migrations).
 - `redeploy` (Boolean) Whether to trigger a redeployment after updating the service instance. **Default** `true`.
 - `registry_credentials_password` (String, Sensitive) Password for private Docker registry authentication.
 - `registry_credentials_username` (String) Username for private Docker registry authentication.
+- `restart_policy_max_retries` (Number) Maximum number of restart retries when using `ON_FAILURE` policy.
+- `restart_policy_type` (String) Restart policy type. Valid values: `ALWAYS`, `NEVER`, `ON_FAILURE`.
+- `sleep_application` (Boolean) Enable serverless mode. When enabled, the application sleeps after 10 minutes of inactivity and wakes on incoming requests.
 - `source_image` (String) Docker image to deploy for this service instance. Conflicts with `source_repo`.
 - `source_repo` (String) GitHub repository to deploy for this service instance. Conflicts with `source_image`.
+- `start_command` (String) Custom start command to run the application.
 
 ### Read-Only
 
